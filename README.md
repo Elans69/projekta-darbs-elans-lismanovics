@@ -1,1 +1,0 @@
-# projekta-darbs-elans-lismanovics
