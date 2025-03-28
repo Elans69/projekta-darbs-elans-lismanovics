@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viktorīna</title>
+    <link rel="stylesheet" href="styleViktorina.css">
+</head>
+<body>
+    <div class="konteiners">
+        <h1 id="jautajums">Jautājums</h1>
+        <div id="opcijas">Opcijas</div>
+        <p>Atlikušais laiks: <span id = "taimers">30 </span>sekundes</p>
+        <p class="pareizasAtbildesStils">Pareizās atbildes: <span id="pareizasAtbildes">0</span></p>
+        <button onclick="Atpakal()">Atpakaļ uz sākumu</button>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        function Atpakal() {
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>
