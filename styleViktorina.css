@@ -13,3 +13,9 @@ body {
     justify-content: center;
     height: 100vh;
 }
+
+.taimeris {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
