@@ -14,7 +14,7 @@ const questions = [
  let laiksPalicis = 30;
  let skaits = 0;
  let jautajumaKarta = 0;
- let taimeris;
+ let taimeris = null;
 
 const taimeraDisplejs = document.getElementById("taimeris");
 const jautajumaNumurs = document.getElementById("jautajumaNumurs");
@@ -24,27 +24,75 @@ const opcijuKonteiners = document.getElementById("opcijuKonteiners");
 const pareizoSkaits = document.getElementById("pareizoSkaits");
 
 function saktViktorinu() {
-    kopejieJautajumi.textContent = jautajums.garums;
+    kopejieJautajumi.textContent = questions.length;
+    pareizoSkaits.textContent = "0"
+    jautajumaKarta = 0;
+    skaits = 0;
     ieladetJautajumus();
-    taimeris = setInterval(updateTaimeru, 1000);
+    saktTaimeru();
 }
-function loadQuestion() {
-    if ( jautajumaKarta>= jautajums.garums) {
+function saktTaimeru() {
+clearInterval(taimeris);
+laiksPalicis = 30;
+taimeraDisplejs.textContent = laiksPalicis;
+taimeris = setInterval(updateTaimeru, 1000);
+}
+function ieladetJautajumus() {
+    if ( jautajumaKarta>= questions.length) {
         pabeigtViktorinu();
         return;
     }
     const j = questions[jautajumaKarta];
-   jautajumaTeksts.textContent = j.jautajums;
+   jautajumaTeksts.textContent = j.question;
    jautajumaNumurs.textContent = jautajumaKarta + 1;
    opcijuKonteiners.innerHTML = "";
-   j.option.forEach(option => {
+
+   j.options.forEach(option => {
        const btn = document.createElement("button");
        btn.textContent = option;
-       btn.klasesList.add("option-btn");
-       btn.onclick = () => parbaudiAtbildi(option);
+       btn.classList.add("option-btn");
+       btn.onclick = () => {
+         parbaudiAtbildi(option);
+       };
        opcijuKonteiners.appendChild(btn);
    });
 
-laiksPalicis = 30;
-taimeraDisplejs.textContent = taimeraDisplejs;
+   saktTaimeru();
 }
+
+function parbaudiAtbildi(answer) {
+    if (answer === questions[jautajumaKarta].answer) {
+        skaits++;
+        pareizoSkaits.textContent = skaits;
+    }
+    jautajumaKarta++;
+    if (jautajumaKarta < questions.length) {
+        ieladetJautajumus();
+    } else {
+        pabeigtViktorinu();
+    }
+}
+function updateTaimeru() {
+        laiksPalicis--;
+        taimeraDisplejs.textContent = laiksPalicis;
+        if (laiksPalicis <= 0) {
+        jautajumaKarta++;
+        if (jautajumaKarta < questions.length) {
+            ieladetJautajumus();
+    } else {
+        pabeigtViktorinu();
+        }
+    }
+}
+ function pabeigtViktorinu() {
+    clearInterval(taimeris);
+    jautajumaTeksts.textContent = `Spēle beigusies! Tu atbildēji pareizi uz ${skaits} jautājumiem!`;
+    opcijuKonteiners.innerHTML = `<button class="restart-btn" onclick="restartetViktorinu()">Spēlēt vēlreiz</button>`;
+    jautajumaNumurs.textContent = "-"
+    taimeraDisplejs.textContent = "-"
+ }
+ function restartetViktorinu() {
+    saktViktorinu();
+ }
+
+ saktViktorinu();
